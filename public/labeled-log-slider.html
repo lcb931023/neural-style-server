@@ -19,9 +19,11 @@
       .log-slider {
         flex: 3;
       }
-
-      .value-text {
-        font-size: 12px;
+      
+      paper-slider {
+        --paper-slider-input: {
+    	    width: 120px;
+    	  };
       }
     </style>
     <div class="label-text">{{ label }}</div>
@@ -30,10 +32,12 @@
          class="log-slider"
          id="slider"
          disabled="{{ disabled }}"
-         value="{{ sliderValue_ }}"
-         max="50">
+         value="{{ value }}"
+         min="{{ min }}"
+         max="{{ max }}"
+         step="0.0001"
+         editable>
       </paper-slider>
-      <div class="value-text">{{ valueText_ }}</div>
     </div>
   </template>
   <script>
@@ -54,51 +58,15 @@
             type: Number,
             value: 1,
             notify: true,
-            observer: 'valueChanged_',
           },
           min: {
             type: Number,
             value: 0.01,
           },
-          linearMin_: {
-            type: Number,
-            computed: 'computeLinear_(min)',
-          },
           max: {
             type: Number,
             value: 100,
           },
-          linearMax_: {
-            type: Number,
-            computed: 'computeLinear_(max)',
-          },
-          sliderValue_: {
-            type: Number,
-            value: 0,
-            observer: 'sliderValueChanged_',
-          },
-          valueText_: {
-            type: Number,
-            computed: 'computeValueText_(value)',
-          },
-        },
-        computeLinear_: function(logValue) {
-          return Math.log(logValue) / Math.log(10);
-        },
-        computeValueText_: function(value) {
-          return value.toPrecision(3);
-        },
-        valueChanged_: function(newValue, oldValue) {
-          var linearValue = Math.log(newValue) / Math.log(10);
-          var scaledLinearValue = Math.round(50 * (linearValue - this.linearMin_) / (this.linearMax_ - this.linearMin_));
-          if (scaledLinearValue != this.sliderValue) {
-            this.set('sliderValue_', scaledLinearValue);
-          }
-        },
-        sliderValueChanged_: function(newSliderValue, oldSliderValue) {
-          var linearValue = (newSliderValue / 50) * (this.linearMax_ - this.linearMin_) + this.linearMin_;
-          var logValue = Math.pow(10, linearValue);
-          this.set('value', logValue);
         },
       });
     })();
