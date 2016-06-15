@@ -33,7 +33,7 @@
         padding-bottom: 6px;
       }
 
-      .normalize-gradients {
+      .checkbox {
         font-size: 12px;
       }
     </style>
@@ -88,7 +88,7 @@
            layers="{{ settings.contentLayers }}"
            disabled="{{ disabled }}">
         </layer-picker>
-        <paper-checkbox class="normalize-gradients" checked="{{ settings.normalizeGradients }}" disabled="{{ disabled }}">
+        <paper-checkbox class="checkbox" checked="{{ settings.normalizeGradients }}" disabled="{{ disabled }}">
           Normalize Gradients
         </paper-checkbox>
       </div>
@@ -126,6 +126,9 @@
            layers="{{ settings.styleLayers }}"
            disabled="{{ disabled }}">
         </layer-picker>
+        <paper-checkbox class="checkbox" checked="{{ settings.originalColors }}" disabled="{{ disabled }}">
+          Original Colors
+        </paper-checkbox>
       </div>
     </div>
   </template>
@@ -139,6 +142,7 @@
         'tvWeight': 0.001,
         'init': 'random',
         'normalizeGradients': false,
+        'originalColors': false,
         'contentLayers': ['relu4_2'],
         'styleLayers': ['relu1_1', 'relu2_1', 'relu3_1', 'relu4_1', 'relu5_1'],
         'styleScale': 1.0,

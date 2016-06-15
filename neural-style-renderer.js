@@ -94,6 +94,10 @@ function runRender(task, callback) {
   if (task.settings.normalizeGradients) {
     params.push('-normalize_gradients');
   }
+  if (task.settings.originalColors) {
+    params.push('-original_colors');
+    params.push(1);
+  }
 
   util.log('Running neural_style for id ' + task.id + ' with params: ' + params);
   var neuralStyle = childProcess.spawn('th', params, {
@@ -171,6 +175,7 @@ var DEFAULT_SETTINGS = {
   'tvWeight': 0.001,
   'init': 'random',
   'normalizeGradients': false,
+  'originalColors': false,
   'contentLayers': ['relu4_2'],
   'styleLayers': ['relu1_1', 'relu2_1', 'relu3_1', 'relu4_1', 'relu5_1'],
   'styleScale': 1.0,
