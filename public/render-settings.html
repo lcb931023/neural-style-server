@@ -4,6 +4,7 @@
 <link rel="import" href="bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
 <link rel="import" href="bower_components/paper-item/paper-item.html">
 <link rel="import" href="bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="bower_components/paper-input/paper-textarea.html">
 
 <link rel="import" href="labeled-log-slider.html">
 <link rel="import" href="layer-picker.html">
@@ -35,6 +36,9 @@
 
       .checkbox {
         font-size: 12px;
+      }
+      .notes {
+        width: 330px;
       }
     </style>
     <div class="settings-columns">
@@ -131,6 +135,7 @@
         </paper-checkbox>
       </div>
     </div>
+    <paper-textarea class="notes" label="Notes" value="{{ settings.notes }}"></paper-textarea>
   </template>
   <script>
     function makeDefaultSettings() {
@@ -149,6 +154,7 @@
         'pooling': 'max',
         'optimizer': 'adam',
         'learningRate': 10.0,
+        'notes': '',
       };
     }
 
