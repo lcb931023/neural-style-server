@@ -9,6 +9,7 @@ var neuralStyleRenderer = require('./neural-style-renderer');
 var neuralStyleUtil = require('./neural-style-util');
 var passport = require('passport');
 var passportHttp = require('passport-http');
+var logger = require('./logger');
 
 var app = express();
 expressWs(app);
@@ -90,7 +91,11 @@ app.ws('/updates', function(ws, req) {
 
 function broadcastUpdate(type, data) {
   _.each(updateSockets, function(ws) {
-    ws.send(JSON.stringify({'type': type, 'data': data}));
+    try {
+      ws.send(JSON.stringify({'type': type, 'data': data}));
+    } catch (e) {
+      logger.log('error', e);
+    }
   });
 }
 
@@ -105,5 +110,6 @@ neuralStyleRenderer.eventEmitter.on('status', function(status) {
 var server = app.listen(config.get('port'), function() {
   var host = server.address().address;
   var port = server.address().port;
-  console.log('Listening at http://%s:%s', host, port);
+  logger.log('info', '======== Server Start ========');
+  logger.log('info', 'Listening at http://%s:%s', host, port);
 });
