@@ -76,7 +76,11 @@ app.ws('/updates', function(ws, req) {
     if (_.findIndex(updateSockets, ws) == -1) {
       return;
     }
-    ws.send(JSON.stringify({'type': 'status', 'data': status}));
+    try {
+      ws.send(JSON.stringify({'type': 'status', 'data': status}));
+    } catch (e) {
+      logger.log('error', e);
+    }
   });
   process.nextTick(function() {
     if (_.findIndex(updateSockets, ws) == -1) {
@@ -84,7 +88,11 @@ app.ws('/updates', function(ws, req) {
     }
     var taskStatuses = neuralStyleRenderer.getTaskStatuses();
     for (var i = taskStatuses.length - 1; i >= 0; i--) {
-      ws.send(JSON.stringify({'type': 'render', 'data': taskStatuses[i]}));
+      try {
+        ws.send(JSON.stringify({'type': 'render', 'data': taskStatuses[i]}));
+      } catch (e) {
+        logger.log('error', e);
+      }
     }
   });
 });
