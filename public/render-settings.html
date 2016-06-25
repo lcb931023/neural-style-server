@@ -178,6 +178,9 @@
         reset: function() {
           this.set('settings', makeDefaultSettings());
         },
+        clearNotes: function () {
+          this.set('settings.notes', '')
+        },
         settingsChanged_: function(changeRecord) {
           var fixNumericSetting = function(name) {
             if (typeof(this.settings[name]) == 'string') {
